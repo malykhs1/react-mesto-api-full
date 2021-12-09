@@ -1,0 +1,7 @@
+.card__like_active {
+	background-image: url(https://code.s3.yandex.net/web-code/dom/heart-filled.svg);
+}
+
+.card__like_active:hover {
+	cursor: pointer;
+}

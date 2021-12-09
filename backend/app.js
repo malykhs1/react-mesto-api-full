@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost:27017/mestobd', {
 const options = {
   origin: [
     'http://localhost:3001',
+    'http://malykhs.nomoredomains.rocks',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,

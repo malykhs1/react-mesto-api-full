@@ -1,0 +1,21 @@
+.profile__avatar-button {
+    min-height: 26px;
+    min-width: 26px;
+    background: url(/src/images/avatar-button.svg) transparent 50% no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin: -13px -13px 0 0;
+    border: none;
+    padding: 0;
+    opacity: 0;
+}
+
+.profile__avatar-button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  
+  .profile__avatar-button:hover .profile__avatar {
+    opacity: 0;
+  }

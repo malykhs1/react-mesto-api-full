@@ -1,0 +1,26 @@
+.card {
+    width: 100%;
+    max-width: 282px;
+    min-height: 361px;
+    background: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    }
+
+    @media (min-width: 800px) and (max-width: 900px) {
+        .card {
+            max-width: 250px;
+        }
+    }
+
+    @media (min-width: 540px) and (max-width: 600px) {
+        .card {
+            margin: 10px;
+        }
+    }
+

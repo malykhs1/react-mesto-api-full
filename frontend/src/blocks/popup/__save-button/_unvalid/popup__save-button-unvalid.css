@@ -1,0 +1,7 @@
+.popup__save-button-unvalid {
+    background: #E5E5E5;
+}
+
+.popup__save-button-unvalid:hover {
+    cursor: default;
+}

@@ -1,0 +1,12 @@
+.header__sign-out {
+    background: none;
+    color: white;
+    border: none;
+    max-width: 56px;
+    height: 22px;
+}
+
+.header__sign-out:hover {
+    opacity: 60%;
+	cursor: pointer;
+}
