@@ -1,23 +1,19 @@
 require('dotenv').config();
 const express = require('express');
-const PORT = 3000;
+const { PORT = 4000 } = process.env;
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-
-const app = express();
 const cors = require('cors');
 const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-mongoose.connect('mongodb://localhost:27017/mestobd', {
-  useNewUrlParser: true,
-});
+const app = express();
 
 const options = {
   origin: [
-    'http://localhost:3001',
     'http://malykhs.nomoredomains.rocks',
-    'http://api.malykhs.nomoredomains.rocks/',
+    'http://api.malykhs.nomoredomains.rocks',
+    'http://localhost:3001',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
@@ -26,6 +22,9 @@ const options = {
   credentials: true,
 };
 
+mongoose.connect('mongodb://localhost:27017/mestobd', {
+  useNewUrlParser: true,
+});
 app.use('*', cors(options));
 app.use(express.json());
 app.use(requestLogger);
