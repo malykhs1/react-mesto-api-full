@@ -3,7 +3,7 @@ import { Route } from "react-router";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.svg";
 
-const Header = ({ email, onSignOut }) => {
+export const Header = ({ email, onSignOut }) => {
   return (
     <header className="header section">
       <img src={logo} alt="Место" className="header__logo" />
@@ -33,4 +33,3 @@ const Header = ({ email, onSignOut }) => {
   );
 }
 
-export default Header;

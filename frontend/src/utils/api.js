@@ -13,29 +13,38 @@ class Api {
     }
 
     // загружаем карточки с сервера
-    getServerCards() {
+    getServerCards(token) {
         return fetch(`${this._url}/cards`, {
                 method: "GET",
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
             })
             .then(this._checkResponse);
     }
 
     //подгружаем данные пользователя с сервера
-    getUserInfo() {
+    getUserInfo(token) {
         return fetch(`${this._url}/users/me`, {
                 method: 'GET',
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
             })
             .then(this._checkResponse);
     }
 
    
     //добавляем новую карточку
-    addNewCard(name, link) { 
+    addNewCard(name, link, token) { 
         return fetch(`${this._url}/cards`, {
                 method: "POST",
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
                 body: JSON.stringify({
                     name: name,
                     link: link
@@ -45,10 +54,13 @@ class Api {
     }
 
      //обновляем данные пользователя на серваке
-     setUserInfo(name, job) {
+     setUserInfo(name, job, token) {
         return fetch(`${this._url}/users/me`, {
                 method: 'PATCH',
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
                 body: JSON.stringify({
                     name: name,
                     about: job
@@ -59,10 +71,13 @@ class Api {
 
 
  //обновляем аватар пользователя
-    setAvatar(avatar) {
+    setAvatar(avatar, token) {
         return fetch(`${this._url}/users/me/avatar`, {
                 method: 'PATCH',
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
                 body: JSON.stringify({
                     avatar: avatar
                 })
@@ -71,19 +86,25 @@ class Api {
     }
 
     //лайкаем карточку
-    likeCard(cardId, isLiked) {
+    toggleLikeCard(cardId, isLiked, token) {
         return fetch(`${this._url}/cards/likes/${cardId}`, {
                 method: isLiked ? "DELETE" : "PUT",
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
             })
             .then(this._checkResponse);
     }
 
     //удаляем карточку
-    deleteCardRequest(cardId) {
+    deleteCardRequest(cardId, token) {
         return fetch(`${this._url}/cards/${cardId}`, {
                 method: "DELETE",
-                headers: this._headers,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': `Bearer ${token}`,
+                  }, 
             })
             .then(this._checkResponse);
     }
@@ -92,12 +113,7 @@ class Api {
 
 //создаем экземпляр класса
 
-const api = new Api({
-	url: "http://api.malykhs.nomoredomains.rocks",
-	headers: {
-		"content-type": "application/json",
-		authorization: `Bearer ${localStorage.getItem('token')}`,
-	},
+export const api = new Api({
+	url: "https://api.malykhs.nomoredomains.rocks",
 });
 
-export default api;

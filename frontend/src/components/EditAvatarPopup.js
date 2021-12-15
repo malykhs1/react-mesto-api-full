@@ -1,6 +1,6 @@
-import PopupWithForm from "./PopupWithForm";
 import React from "react";
-const EditAvatarPopup = ({ isOpened, onClose, onUpdateAvatar }) => {
+import { PopupWithForm } from "./PopupWithForm";
+export const EditAvatarPopup = ({ isOpened, onClose, onUpdateAvatar }) => {
   const avatarRef = React.useRef(); 
 
   const handleSubmit = (e) => {
@@ -33,5 +33,3 @@ const EditAvatarPopup = ({ isOpened, onClose, onUpdateAvatar }) => {
     </PopupWithForm>
   );
 };
-
-export default EditAvatarPopup;

@@ -1,66 +1,68 @@
-import { useEffect, useState } from "react";
 import React from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import Main from "./Main";
-import ImagePopup from "./ImagePopup";
-import AddPlacePopup from "./AddPlacePopup";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import api from "../utils/api";
-import Login from "./Login";
-import Register from "./Register";
-import InfoToolTip from "./InfoTooltip";
-import * as mestoAuth from "../utils/mestoAuth";
-import ProtectedRoute from "./ProtectedRoute";
+import { useEffect, useState } from "react";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { Main } from "./Main";
+import { ImagePopup } from "./ImagePopup";
+import { AddPlacePopup } from "./AddPlacePopup";
+import { EditProfilePopup } from "./EditProfilePopup";
+import { EditAvatarPopup } from "./EditAvatarPopup";
+import { api } from "../utils/api";
+import { Login } from "./Login";
+import { Register } from "./Register";
+import { InfoToolTip } from "./InfoTooltip";
+import { ProtectedRoute } from "./ProtectedRoute";
 import { Route, Switch, useHistory } from "react-router-dom";
+import { CurrentUserContext } from "../context/CurrentUserContext";
+import * as mestoAuth from "../utils/mestoAuth";
 
-import CurrentUserContext from "../context/CurrentUserContext";
-
-const App =() => {
+export const App =() => {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState(null)
 
   const [isInfoToolTipOpened, setIsInfoToolTipOpened] = useState(false);
   const [isSuccseed, setSuccseed] = useState(true);
 
   const history = useHistory();
 
-  useEffect(() => {
-    checkToken();
-    Promise.all([api.getUserInfo(), api.getServerCards()])
-      .then(([user, initialCards]) => {
-        setCurrentUser(user)
-        setCards(initialCards)
-      })
-    }, []);
-
-  const checkToken = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      mestoAuth
-        .getContent(token)
-        .then((data) => {
-          if (data) {
-            //получаю объект с данными о пользователе, но без токена
-            setCurrentUser(data)
-            setLoggedIn(true);
-            history.push('/');
-          }
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        Promise.all([api.getUserInfo(token), api.getServerCards(token)])
+        .then(([user, initialCards]) => {
+          setCurrentUser(user)
+          setCards(initialCards)
         })
-        .catch((error) => {
-          console.log(error);
-        });
+          .catch(err => console.log(err))
+      }
+    }, [loggedIn])
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      mestoAuth.checkToken(token).then((res) => {
+        if (res) {
+          setUserEmail(res.email);
+          setLoggedIn(true);
+          history.push('/');
+        } else {
+          localStorage.removeItem('token');
+        }
+      })
+        .catch(err => console.log(err));
     }
-  }
+  }, [history]);
 
   const onRegister = ({ email, password }) => {
+    const token = localStorage.getItem('token');
     return mestoAuth
-      .register(email, password)
+      .register(email, password, token)
       .then(() => {
         setSuccseed(true);
       })
@@ -72,12 +74,12 @@ const App =() => {
 
  
   const onLogin = ({ email, password }) => {
+    const token = localStorage.getItem('token');
     return mestoAuth
-      .authorize(email, password)
-      .then((data) => {
-        localStorage.setItem("token", data.token);
-        checkToken();
-        onReload();
+      .login(email, password, token)
+      .then(() => {
+        setUserEmail(email)
+        setLoggedIn(true)
       })
       .catch(() => {
         setSuccseed(false);
@@ -98,10 +100,6 @@ const App =() => {
     history.push("/sign-in");
   }
 
-  const onReload = () => {
-    window.location.reload();
-  }
-
   //изменение стейта при открытии попапап
   const onEditProfile = () => {
     setIsEditProfilePopupOpen(true);
@@ -117,8 +115,9 @@ const App =() => {
   const [currentUser, setCurrentUser] = useState({});
 
   const handleUpdateUser = ({ name, about }) => {
+    const token = localStorage.getItem('token');
     api
-      .setUserInfo(name, about)
+      .setUserInfo(name, about, token)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
@@ -129,8 +128,9 @@ const App =() => {
   };
 
   const handleUpdateAvatar = ({ avatar }) => {
+    const token = localStorage.getItem('token');
     api
-      .setAvatar(avatar)
+      .setAvatar(avatar, token)
       .then((avatarData) => {
         setCurrentUser(avatarData);
         closeAllPopups();
@@ -141,8 +141,9 @@ const App =() => {
   };
 
   const handleAddCard = ({ name, link }) => {
+    const token = localStorage.getItem('token');
     api
-      .addNewCard(name, link)
+      .addNewCard(name, link, token)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -156,12 +157,13 @@ const App =() => {
   const [selectedCard, setSelectedCard] = React.useState(null);
 
  const handleCardLike = (card) => {
+   const token = localStorage.getItem('token');
     const isLiked = card.likes.some((i) => i === currentUser._id);
     api
-      .likeCard(card._id, isLiked)
+      .toggleLikeCard(card._id, isLiked, token)
       .then((newCard) => {
         setCards((cards) =>
-          cards.map((c) => (c === card._id ? newCard : c))
+          cards.map((c) => (c._id === card._id ? newCard : c))
         );
       })
       .catch((err) => {
@@ -171,8 +173,9 @@ const App =() => {
   
 
   const handleCardDelete = (card) => {
+    const token = localStorage.getItem('token');
     api
-      .deleteCardRequest(card._id)
+      .deleteCardRequest(card._id, token)
       .then((data) => {
         setCards((state) => 
         state.filter((j) => j._id !== card._id && data));
@@ -193,7 +196,7 @@ const App =() => {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
-        <Header email={currentUser.email} onSignOut={onSignOut} />
+        <Header email={userEmail} onSignOut={onSignOut} />
         <Switch>
           <ProtectedRoute
             exact
@@ -208,7 +211,7 @@ const App =() => {
             handleEditProfileClick={onEditProfile}
             handleAddPlaceClick={onAddPlace}
             component={Main}
-          ></ProtectedRoute>
+          />
 
           <Route path="/sign-in">
             <Login onLogin={onLogin} />
@@ -251,5 +254,3 @@ const App =() => {
     </CurrentUserContext.Provider>
   );
 }
-
-export default App;

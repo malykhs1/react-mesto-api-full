@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-const Login = ({ onLogin }) => {
+export const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+
 
   const resetForm = () => {
     setEmail("");
@@ -20,6 +22,7 @@ const Login = ({ onLogin }) => {
       .then(resetForm)
       .then(() => history.push("/"));
   };
+
 
   return (
     <div className="login__container">
@@ -51,4 +54,3 @@ const Login = ({ onLogin }) => {
   );
 };
 
-export default Login;

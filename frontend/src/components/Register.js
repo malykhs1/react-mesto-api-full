@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Register = ({ onRegister }) => {
+export const Register = ({ onRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +24,7 @@ const Register = ({ onRegister }) => {
     setEmail(e.target.value);
   };
 
-  const handlePaswordChange = (e) => {
+  const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
@@ -48,7 +48,7 @@ const Register = ({ onRegister }) => {
           placeholder="Пароль"
           type="password"
           value={password}
-          onChange={handlePaswordChange}
+          onChange={handlePasswordChange}
         />
         <button type="submit" className="register__button">
           Зарегистрироваться
@@ -64,4 +64,3 @@ const Register = ({ onRegister }) => {
   );
 };
 
-export default Register;

@@ -1,6 +1,6 @@
 import react from "react";
 
-function InfoToolTip({ id, isOpened, onClose, isSuccseed }) {
+export const InfoToolTip = ({ id, isOpened, onClose, isSuccseed }) => {
   function closeByEsc(e) {
     if (e.key === "Escape") {
       onClose && onClose();
@@ -48,4 +48,3 @@ function InfoToolTip({ id, isOpened, onClose, isSuccseed }) {
   );
 }
 
-export default InfoToolTip;

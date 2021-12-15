@@ -1,6 +1,6 @@
-export const BASE_URL = 'http://api.malykhs.nomoredomains.rocks';
+export const BASE_URL = 'https://api.malykhs.nomoredomains.rocks';
 
-const chechResponse = (res) => {
+const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
@@ -14,20 +14,21 @@ export const register = (email, password) => fetch(`${BASE_URL}/signup`, {
   },
   body: JSON.stringify({ email, password }),
 })
-  .then(chechResponse)
+  .then(checkResponse)
   .catch((err) => {
     console.log(err);
   });
 
 
-export const authorize = ( email, password) => fetch(`${BASE_URL}/signin`, {
+export const login = ( email, password) => {
+return fetch(`${BASE_URL}/signin`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({ email, password }),
 })
-.then(chechResponse)
+.then(checkResponse)
 .then((data) => {
   if (data.token) {
     localStorage.setItem('token', data.token);
@@ -36,9 +37,10 @@ export const authorize = ( email, password) => fetch(`${BASE_URL}/signin`, {
 })
 .catch((err) => {
   console.log(err);
-});
+})
+}
 
-export const getContent = (token) => {
+export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
@@ -46,8 +48,7 @@ export const getContent = (token) => {
       'Authorization': `Bearer ${token}`,
     }
   })
-  .then(data => data)
-  .then(chechResponse);
+  .then(checkResponse);
 }
 
 

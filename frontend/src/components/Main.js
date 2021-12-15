@@ -1,8 +1,8 @@
-import Card from "./Card";
 import React from "react";
-import CurrentUserContext from "../context/CurrentUserContext";
+import { CurrentUserContext } from "../context/CurrentUserContext";
+import { Card } from "./Card";
 
-function Main({
+export const Main = ({
   handleEditAvatarClick,
   handleEditProfileClick,
   handleAddPlaceClick,
@@ -10,7 +10,7 @@ function Main({
   cards,
   onCardLike,
   onCardDelete
-}) {
+}) => {
   const initialCards = cards.map((card) => (
     <Card
       key={card._id}
@@ -63,5 +63,3 @@ function Main({
     </main>
   );
 }
-
-export default Main;

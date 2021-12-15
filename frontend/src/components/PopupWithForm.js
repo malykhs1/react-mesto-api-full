@@ -1,6 +1,6 @@
 import react from "react";
 
-const PopupWithForm = ({
+export const PopupWithForm = ({
   id,
   title,
   children,
@@ -48,4 +48,3 @@ const PopupWithForm = ({
   );
 };
 
-export default PopupWithForm;

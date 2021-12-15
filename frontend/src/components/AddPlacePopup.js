@@ -1,6 +1,6 @@
 import React from "react";
-import PopupWithForm from "./PopupWithForm";
-function AddPlacePopup({ isOpened, onClose, onAddCard }) {
+import { PopupWithForm } from "./PopupWithForm";
+export const AddPlacePopup = ({ isOpened, onClose, onAddCard }) => {
    const nameRef = React.useRef(); 
    const linkRef = React.useRef(); 
 
@@ -49,5 +49,4 @@ function AddPlacePopup({ isOpened, onClose, onAddCard }) {
    );
  }
  
- export default AddPlacePopup;
  
