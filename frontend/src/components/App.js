@@ -60,31 +60,33 @@ export const App =() => {
   }, [history]);
 
   const onRegister = ({ email, password }) => {
-    const token = localStorage.getItem('token');
-    return mestoAuth
-      .register(email, password, token)
-      .then(() => {
-        setSuccseed(true);
+    return mestoAuth.register(email, password)
+      .then((res) => {
+        if(res) {
+          setSuccseed(true);
+          history.push('/')
+        } else {
+          setSuccseed(false)
+        }
       })
-      .catch(() => {
-        setSuccseed(false);
-      })
+      .catch(err => console.log(err))
       .finally(setIsInfoToolTipOpened(true));
   };
 
  
   const onLogin = ({ email, password }) => {
-    const token = localStorage.getItem('token');
     return mestoAuth
-      .login(email, password, token)
-      .then(() => {
+      .login(email, password)
+      .then((data) => {
+        localStorage.setItem("token", data.token);
         setUserEmail(email)
         setLoggedIn(true)
+        history.push('/')
       })
       .catch(() => {
-        setSuccseed(false);
-        setIsInfoToolTipOpened(true);
         setLoggedIn(false);
+        setSuccseed(false);
+        setIsInfoToolTipOpened(true)
       });
   };
 
@@ -153,24 +155,21 @@ export const App =() => {
       });
   };
 
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = React.useState({});
   const [selectedCard, setSelectedCard] = React.useState(null);
 
- const handleCardLike = (card) => {
-   const token = localStorage.getItem('token');
+  const handleCardLike = (card) => {
     const isLiked = card.likes.some((i) => i === currentUser._id);
+    const token = localStorage.getItem('token');
     api
       .toggleLikeCard(card._id, isLiked, token)
       .then((newCard) => {
         setCards((cards) =>
-          cards.map((c) => (c._id === card._id ? newCard : c))
+          cards.map((c) => (c === card._id ? newCard : c))
         );
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
-  
 
   const handleCardDelete = (card) => {
     const token = localStorage.getItem('token');
@@ -211,7 +210,7 @@ export const App =() => {
             handleEditProfileClick={onEditProfile}
             handleAddPlaceClick={onAddPlace}
             component={Main}
-          />
+          ></ProtectedRoute>
 
           <Route path="/sign-in">
             <Login onLogin={onLogin} />

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Register = ({ onRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const history = useHistory();
 
   const resetForm = () => {
     setEmail("");
@@ -17,7 +16,6 @@ export const Register = ({ onRegister }) => {
 
     onRegister({ email, password })
       .then(resetForm)
-      .then(() => history.push("/sign-in"));
   };
 
   const handleEmailChange = (e) => {
