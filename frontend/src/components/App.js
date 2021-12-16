@@ -1,4 +1,5 @@
 import React from "react";
+import * as mestoAuth from "../utils/mestoAuth";
 import { useEffect, useState } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
@@ -14,7 +15,6 @@ import { InfoToolTip } from "./InfoTooltip";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { CurrentUserContext } from "../context/CurrentUserContext";
-import * as mestoAuth from "../utils/mestoAuth";
 
 export const App =() => {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
