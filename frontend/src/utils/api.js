@@ -114,7 +114,6 @@ class Api {
 //создаем экземпляр класса
 
 export const api = new Api({
-	// url: "https://api.malykhs.nomoredomains.rocks",
-    url: 'http://localhost:3000',
+	url: "https://api.malykhs.nomoredomains.rocks",
 });
 

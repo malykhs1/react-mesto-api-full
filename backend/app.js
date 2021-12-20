@@ -13,7 +13,6 @@ const options = {
   origin: [
     'http://malykhs.nomoredomains.rocks',
     'https://malykhs.nomoredomains.rocks',
-    'http://api.malykhs.nomoredomains.rocks',
     'http://localhost:3001',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
