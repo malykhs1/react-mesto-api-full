@@ -56,7 +56,7 @@ const unlikeCard = (req, res, next) => Card.findByIdAndUpdate(req.params.cardId,
   .then((card) => {
     if (!card) {
       throw new NotFoundError('Передан несуществующий id карточки');
-    } return res.status(200).send({ data: card });
+    } return res.status(200).send({ card });
   })
   .catch((e) => {
     if (e.name === 'CastError') {

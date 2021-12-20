@@ -3,11 +3,11 @@ import { CurrentUserContext } from "../context/CurrentUserContext";
 import { Card } from "./Card";
 
 export const Main = ({
+  cards,
   handleEditAvatarClick,
   handleEditProfileClick,
   handleAddPlaceClick,
   onCardClick,
-  cards,
   onCardLike,
   onCardDelete
 }) => {
@@ -20,6 +20,7 @@ export const Main = ({
       handleCardLike={onCardLike}
     />
   ));
+
 
   const userInfo = React.useContext(CurrentUserContext);
 

@@ -4,6 +4,7 @@ const { celebrate, Joi } = require('celebrate');
 const userRouter = require('./users.js');
 const cardRouter = require('./cards.js');
 const NotFoundError = require('../errors/not-found-error');
+const Unauthorized = require('../errors/unauthorized-error')
 
 const { createUser, loginUser } = require('../controllers/users');
 const auth = require('../middlewares/auth');
@@ -28,7 +29,7 @@ router.use('/users', auth, userRouter);
 router.use('/cards', auth, cardRouter);
 
 router.use((req, res) => {
-  throw new NotFoundError('Страница не найдена');
+  throw new Unauthorized('Страница не найдена');
 });
 
 module.exports = router;

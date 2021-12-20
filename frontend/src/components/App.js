@@ -34,9 +34,10 @@ export const App =() => {
       const token = localStorage.getItem('token');
       if (token) {
         Promise.all([api.getUserInfo(token), api.getServerCards(token)])
-        .then(([user, initialCards]) => {
-          setCurrentUser(user)
-          setCards(initialCards)
+        .then(([userData, cards]) => {
+          setCurrentUser(userData)
+          console.log(cards)
+          setCards(cards)
         })
           .catch(err => console.log(err))
       }
@@ -155,21 +156,24 @@ export const App =() => {
       });
   };
 
-  const [cards, setCards] = React.useState({});
+  const [cards, setCards] = React.useState([]);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i === currentUser._id);
     const token = localStorage.getItem('token');
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .toggleLikeCard(card._id, isLiked, token)
       .then((newCard) => {
-        setCards((cards) =>
-          cards.map((c) => (c === card._id ? newCard : c))
-        );
+        setCards((state) =>
+        //c = allCards
+          state.map((c) => c._id === card._id ? newCard.card : c));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
 
   const handleCardDelete = (card) => {
     const token = localStorage.getItem('token');
