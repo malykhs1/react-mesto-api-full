@@ -17,8 +17,7 @@ import { Route, Switch, useHistory } from "react-router-dom";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
 export const App =() => {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 

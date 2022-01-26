@@ -18,13 +18,13 @@ export const Register = ({ onRegister }) => {
       .then(resetForm)
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+    const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+    };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+    const handlePasswordChange = (e) => {
+      setPassword(e.target.value);
+    };
 
   return (
     <section className="register__container">

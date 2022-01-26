@@ -13,6 +13,7 @@ const options = {
   origin: [
     'http://malykhs.nomoredomains.rocks',
     'https://malykhs.nomoredomains.rocks',
+    'http://api.malykhs.nomoredomains.rocks',
     'http://localhost:3001',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -28,11 +29,7 @@ mongoose.connect('mongodb://localhost:27017/mestobd', {
 app.use('*', cors(options));
 app.use(express.json());
 app.use(requestLogger);
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-}); 
+
 app.use(routes);
 app.use(errorLogger); // подключаем логгер ошибок
 
