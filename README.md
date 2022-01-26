@@ -14,7 +14,7 @@ JavaScript: ООП, classes, fetch, promises, api.
 <img src="https://img.icons8.com/color/38/000000/javascript--v1.png"/>
 
 React.
-<img src="https://img.icons8.com/ultraviolet/38/000000/react--v1.png"/>
+ <img src="https://img.icons8.com/ultraviolet/38/000000/react--v1.png"/>
 
 HTML. Семантическая вёрстка.  
  <img src="https://img.icons8.com/color/36/000000/html-5--v1.png"/>  
@@ -26,7 +26,7 @@ HTML. Семантическая вёрстка.
  <img src="https://img.icons8.com/office/30/000000/plugin.png"/>
  
 Node.JS
-<img src="https://img.icons8.com/color/38/000000/nodejs.png"/>
+ <img src="https://img.icons8.com/color/38/000000/nodejs.png"/>
 
 Figma.  
  <img src="https://img.icons8.com/color/32/000000/figma--v1.png"/>
